@@ -1,4 +1,5 @@
 //Giving this file access to React from the modules
+import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
@@ -38,9 +39,11 @@ class App extends Component { //this class's state has searched video info
 
 
   render() {
+    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 1000);
+
     return (
      <div>
-      <SearchBar onSearchTermChange = {(term) => this.videoSearch(term)} />
+      <SearchBar onSearchTermChange = {videoSearch} />
       <VideoDetail video={this.state.selectedVideo} />
       <VideoList
         onVideoSelect = {(selectedVideo) => this.setState({selectedVideo}) }
